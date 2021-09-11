@@ -32,16 +32,17 @@ public class Jmart
      return discountedPrice;
  }
  public int getOriginalPrice(int discountedPrice, float discountedPercentage){
-     int originalPrice;
-     
+     int originalPrice = discountedPrice + discountedPercentage;
+     return originalPrice ;
  }
  public float getCommissionMultiplier(){
-     
+     return 0.05f;
  }
- public int getAdjustedPrice (int g){
-     
+ public int getAdjustedPrice (int price){
+     price = price + 0.05f;
+     return price;
  }
- public int getAdminFee(int a){
-     
+ public int getAdminFee(int price){
+     return getCommissionMultiplier(price);
  }
 }
