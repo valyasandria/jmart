@@ -22,27 +22,31 @@ public class Jmart
      return potongan;
  }
  public int getDiscountedPrice (int price, float discountPercentage){
-     float discountedPrice;
+     int discountedPrice ;
+     int myDiscount = (int) discountedPrice;
      if (discountPercentage>100.0f){
          discountedPrice = 0;
      }
      else{
-         discountedPrice = price - discountPercentage;
+         discountedPrice = price - myDiscount;
      }
      return discountedPrice;
  }
  public int getOriginalPrice(int discountedPrice, float discountedPercentage){
-     int originalPrice = discountedPrice + discountedPercentage;
+     int myDiscountPercent = (int) discountedPercentage;
+     int originalPrice = discountedPrice + myDiscountPercent;
      return originalPrice ;
  }
  public float getCommissionMultiplier(){
      return 0.05f;
  }
  public int getAdjustedPrice (int price){
-     price = price + 0.05f;
+     int disc = (int) 0.05f;
+     price = price + disc;
      return price;
  }
  public int getAdminFee(int price){
-     return getCommissionMultiplier(price);
+     int disc = (int) 0.05f;
+     return price * disc;
  }
 }
