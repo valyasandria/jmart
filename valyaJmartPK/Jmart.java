@@ -11,7 +11,7 @@ public class Jmart
 {
  public static void main(String[] args)
  {
-    
+    create();
  }
  public static Product create()
  {
