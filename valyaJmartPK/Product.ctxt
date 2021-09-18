@@ -1,0 +1,6 @@
+#BlueJ class context
+comment0.target=Product
+comment0.text=\r\n\ class\ Product\r\n\r\n\ Valya\ Sandria\ Akiela\r\n\ 2006522650\r\n
+comment1.params=name\ weight\ conditionUsed\ priceTag\ category
+comment1.target=Product(java.lang.String,\ int,\ boolean,\ PriceTag,\ ProductCategory)
+numComments=2
