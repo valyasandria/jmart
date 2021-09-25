@@ -7,7 +7,7 @@ package valyaJmartPK;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Transaction extends Recognizable
+public class Transaction extends Recognizable implements FileParser
 {
     public String time = "Time" ;
     public int buyerId;
@@ -31,7 +31,11 @@ public class Transaction extends Recognizable
  public Transaction (int id, Account buyer, Store store)
  {
      super(id);
-     this.buyer = buyer;
-     this.store = store;
+     
  }
+ @Override
+ public boolean read(String content)
+    {
+        return false;
+    }
 }

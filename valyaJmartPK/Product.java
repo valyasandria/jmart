@@ -23,6 +23,7 @@ public Store store;
  public Product(int id, int storeId, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category)
  {
      super(id);
+     this.id = id;
      this.storeId = storeId;
      this.name = name;
      this.weight = weight;
@@ -34,6 +35,7 @@ public Store store;
  public Product(int id, Store store, String name, int weight, boolean conditionUsed, PriceTag priceTag, ProductCategory category)
  {
      super(id);
+     this.id = id;
      this.store = store;
      this.storeId = storeId;
      this.name = name;

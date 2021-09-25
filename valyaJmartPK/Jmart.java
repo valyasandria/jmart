@@ -15,11 +15,11 @@ public class Jmart
  }
  public static Product createProduct()
  {
-     return new Product("Belanja Valya", 5, true, new PriceTag(30.0), ProductCategory.BOOK);
+     return null;
  }
  public static Coupon createCoupon()
  {
-     return new Coupon("Kupon Valya", 22124, Coupon.Type.REBATE, 15000, 70000);
+     return null;
  }
  public static ShipmentDuration createShipmentDuration()
  {
