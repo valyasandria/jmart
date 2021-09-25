@@ -7,33 +7,33 @@ package valyaJmartPK;
  * Valya Sandria Akiela
  * @2006522650
  */
-public class Coupon
+public class Coupon extends Recognizable
 {
- public String name;
- public int code;
- public double cut;
- public Type type;
- public double minimum;
+ public final String name;
+ public final int code;
+ public final double cut;
+ public final Type type;
+ public final double minimum;
  private boolean used;
- public PriceTag priceTag;
  
  
- public Coupon(String name, int code, Type type, double cut, double minimum)
+ public Coupon(int id, String name, int code, Type type, double cut, double minimum)
  {
+     super(id);
      this.name = name;
      this.code = code;
-     this.cut = cut;
      this.type = type;
-     this.used = false;
+     this.cut = cut;
      this.minimum = minimum;
+     this.used = false;
  }
  public boolean isUsed()
  {
-     return this.used;
+     return used;
  }
  public boolean canApply(PriceTag priceTag)
  {
-     if(priceTag.getAdjustedPrice() >= this.minimum && this.used == false)
+     if((priceTag.getAdjustedPrice() >= minimum) && (used == false))
      {
          return true;
      }
@@ -44,12 +44,22 @@ public class Coupon
  }
  public double apply(PriceTag priceTag)
  {
-     this.used = true;
-     return priceTag.getAdjustedPrice()-this.cut;
+     used = true;
+     if(type == Type.DISCOUNT)
+     {
+         return (priceTag.getAdjustedPrice() * (100-cut)/100);
+     }
+     else{
+         return (priceTag.getAdjustedPrice() - cut);
+     }
  }
  public enum Type
  {
     DISCOUNT,
     REBATE
+ }
+ public boolean read (String content)
+ {
+     return false;
  }
 }

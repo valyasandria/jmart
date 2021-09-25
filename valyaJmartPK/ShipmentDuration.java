@@ -9,36 +9,28 @@ package valyaJmartPK;
  */
 public class ShipmentDuration
 {
-   public ShipmentDuration INSTANT = new ShipmentDuration(1<<1);
-   public ShipmentDuration SAME_DAY = new ShipmentDuration(1<<2);
-   public ShipmentDuration NEXT_DAY = new ShipmentDuration(1<<3);
-   public ShipmentDuration REGULER = new ShipmentDuration(1<<4);
-   public ShipmentDuration KARGO = new ShipmentDuration(1<<5);
-   private int bit;
+   public static final ShipmentDuration INSTANT = new ShipmentDuration ((byte) (1<<0));
+   public static final ShipmentDuration SAME_DAY = new ShipmentDuration ((byte)(1<<1));
+   public static final ShipmentDuration NEXT_DAY = new ShipmentDuration((byte) (1<<2));
+   public static final ShipmentDuration REGULER = new ShipmentDuration ((byte) (1<<3));
+   public static final ShipmentDuration KARGO = new ShipmentDuration ((byte) (1<<4));
+   private final byte bit;
    
-   private ShipmentDuration(int bit)
+   private ShipmentDuration(byte bit)
    {
        this.bit = bit ;
    }
    public ShipmentDuration(ShipmentDuration... args)
    {
-       ShipmentDuration.KARGO = (1<<16);
-       ShipmentDuration(5);
-       ShipmentDuration.REGULER = 5 ;
-       ShipmentDuration.KARGO = 18;
-       ShipmentDuration.SAME_DAY = 18;
-       ShipmentDuration.INSTANT = 7;
-       ShipmentDuration.SAME_DAY = 7;
-       ShipmentDuration.NEXT_DAY = 7;
+       byte flags = 0;
+       for(byte i = 0; i < args.length; i++)
+       {
+           flags |= args[i].bit;
+       }
+       bit = flags;
    }
    public boolean isDuration(ShipmentDuration reference)
    {
-       int bit = 5;
-       ShipmentDuration.INSTANT = true;
-       ShipmentDuration.SAME_DAY = false;
-       ShipmentDuration.NEXT_DAY = true;
-       ShipmentDuration.REGULER = false;
-       ShipmentDuration.KARGO= false;
+       return (bit & reference.bit)!=0;
    }
-   
 }

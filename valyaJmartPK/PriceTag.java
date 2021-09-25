@@ -39,7 +39,7 @@ public class PriceTag
      }
      else
      {
-         return discountedPrice - COMMISSION_MULTIPLIER;
+         return discountedPrice * COMMISSION_MULTIPLIER;
      }
  }
  private double getDiscountedPrice()
@@ -50,7 +50,8 @@ public class PriceTag
      }
      else
      {
-         return price - discount;
+         double cut = price * discount / 100.0;
+         return price - cut;
      }
  }
 }

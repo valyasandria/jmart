@@ -11,14 +11,7 @@ public class Jmart
 {
  public static void main(String[] args)
  {
-    create();
-    createProduct();
-    createCoupon();
-    createShipmentDuration();
- }
- public static Product create()
- {
-     return new Product("Belanja Valya", 5, true, new PriceTag(30.0), ProductCategory.SPORTS);
+
  }
  public static Product createProduct()
  {
@@ -26,10 +19,10 @@ public class Jmart
  }
  public static Coupon createCoupon()
  {
-     return new Coupon();
+     return new Coupon("Kupon Valya", 22124, Coupon.Type.REBATE, 15000, 70000);
  }
  public static ShipmentDuration createShipmentDuration()
  {
-     return new ShipmentDuration();
+     return new ShipmentDuration(ShipmentDuration.SAME_DAY, ShipmentDuration.INSTANT);
  }
 }
