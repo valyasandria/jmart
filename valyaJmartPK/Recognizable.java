@@ -10,9 +10,10 @@ package valyaJmartPK;
 public class Recognizable
 {
  public final int id;
- public Recognizable(int id){
+ public Recognizable(int id)
+ {
     this.id = id;
-}
+ }
  public boolean equals(Object object)
  {
      return (object instanceof Recognizable && ((Recognizable) object).id == id);

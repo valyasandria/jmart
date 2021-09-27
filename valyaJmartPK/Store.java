@@ -27,8 +27,13 @@ public class Store extends Recognizable implements FileParser
      this.address = address; 
      this.phoneNumber = phoneNumber;
     }
+    @Override
     public boolean read(String content)
     {
         return false;
+    }
+    public String toString()
+    {
+        return ("Name: PT Maju Jaya\naddress: Jl Barata Jaya\nphoneNumber: 03122051204");
     }
 }

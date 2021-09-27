@@ -7,7 +7,7 @@ package valyaJmartPK;
  * Valya Sandria Akiela
  * @2006522650
  */
-public class Coupon extends Recognizable
+public class Coupon extends Recognizable implements FileParser
 {
  public final String name;
  public final int code;

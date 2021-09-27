@@ -13,16 +13,4 @@ public class Jmart
  {
 
  }
- public static Product createProduct()
- {
-     return null;
- }
- public static Coupon createCoupon()
- {
-     return null;
- }
- public static ShipmentDuration createShipmentDuration()
- {
-     return new ShipmentDuration(ShipmentDuration.SAME_DAY, ShipmentDuration.INSTANT);
- }
 }
