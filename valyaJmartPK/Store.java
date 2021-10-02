@@ -1,5 +1,6 @@
 package valyaJmartPK;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Write a description of class Store here.
@@ -9,6 +10,8 @@ package valyaJmartPK;
  */
 public class Store extends Recognizable implements FileParser
 {
+    public String REGEX_PHONE;
+    public String REGEX_NAME;
     public String name;
     public String address;
     public String phoneNumber;
@@ -30,10 +33,28 @@ public class Store extends Recognizable implements FileParser
     @Override
     public boolean read(String content)
     {
-        return false;
+        return true;
+    }
+    @Override
+    public Object write()
+    {
+        return null;
+    }
+    @Override
+    public boolean validate(){
+        Pattern pattern = Pattern.compile("^[0-9] {9,12}$");
+        Matcher matcher = pattern.matcher(phoneNumber);
+        boolean matchFound = matcher.find();
+        String result = matchFound ? "FOUND!" : "NOT FOUND!";
+        if (result == "FOUND!"){
+            return true;
+        }
+        else{
+            return false;
+        }
     }
     public String toString()
     {
-        return ("Name: PT Maju Jaya\naddress: Jl Barata Jaya\nphoneNumber: 03122051204");
+        return ("Name: " + this.name + "\naddress: " + this.address + "\nphoneNumber: " + this.phoneNumber);
     }
 }

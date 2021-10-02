@@ -1,5 +1,6 @@
 package valyaJmartPK;
 
+import java.util.Date;
 
 /**
  * Write a description of class Complaint here.
@@ -10,16 +11,23 @@ package valyaJmartPK;
 public class Complaint extends Recognizable implements FileParser
 {
     public int paymentId;
-    public String date = "14/02/2022";
+    public Date date ;
     public String desc;
-    Complaint(int id, String desc)
+    Complaint(int id, Date date, String desc)
     {
         super(id);
+    	java.util.Date myDate = new java.util.Date();
+        this.date = date;
         this.desc = desc;
     }
     @Override
     public boolean read(String content)
     {
-        return false;
+        return true;
+    }
+    @Override
+    public Object write()
+    {
+        return null;
     }
 }

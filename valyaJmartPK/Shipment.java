@@ -1,6 +1,7 @@
 package valyaJmartPK;
-
-
+import java.util.Calendar;
+import java.util.Date;
+import java.text.SimpleDateFormat;
 /**
  * Write a description of class Shipment here.
  *
@@ -16,6 +17,7 @@ public class Shipment implements FileParser
    
    public class Duration
    {
+   public final SimpleDateFormat ESTIMATION_FORMAT = new SimpleDateFormat("Date: 'EEE MMMMMMM dd yyyy");
    public final Duration INSTANT = new Duration ((byte) (1<<0));
    public final Duration SAME_DAY = new Duration ((byte)(1<<1));
    public final Duration NEXT_DAY = new Duration((byte) (1<<2));
@@ -23,13 +25,33 @@ public class Shipment implements FileParser
    public final Duration KARGO = new Duration ((byte) (1<<4));
    private final byte bit;
    
+   
+    
+   Calendar cal = Calendar.getInstance();
+   String current_date = ESTIMATION_FORMAT.format(cal.getTime());
    private Duration(byte bit)
    {
        this.bit = bit ;
    }
+   
+   public String getEstimatedArrival(Date reference)
+   {
+	   if(Duration == INSTANT && SAME_DAY) {
+		   return reference;
+	   }
+       else if (Duration == NEXT_DAY){
+           cal.add(Calendar.DATE,1);
+       }
+       else if (Duration == REGULER){
+           cal.add(Calendar.DATE,2);
+       }
+       else if (Duration == KARGO){
+           cal.add(Calendar.DATE,5);
+       }
+   }
    }
    
-   public class MultiDuration
+   public static class MultiDuration
    {
    public byte bit;
    public MultiDuration(MultiDuration... args)
@@ -39,17 +61,36 @@ public class Shipment implements FileParser
        {
            flags |= args[i].bit;
        }
-       bit = flags;
+       this.bit = flags;
    }
    public boolean isDuration(Duration reference)
    {
-       return (bit & reference.bit)!=0;
+       if((this.bit & reference.bit) != 0 )
+       {
+           return true;
+       }
+       else
+       {
+           return false;
+       }
    }
    }
-
+   public Shipment(String address, int shipmentCost, Duration duration, String receipt)
+   {
+     this.address = address;
+     this.shipmentCost = shipmentCost;
+     this.duration = duration;
+     this.receipt = receipt;
+   }
    @Override
    public boolean read(String content)
    {
         return false;
+   }
+   
+   @Override
+   public Object write()
+   {
+       return null;
    }
 }

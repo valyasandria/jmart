@@ -1,6 +1,6 @@
 package valyaJmartPK;
 
-
+import java.util.Date;
 /**
  * Write a description of class Invoice here.
  *
@@ -9,18 +9,20 @@ package valyaJmartPK;
  */
 public class Invoice extends Recognizable implements FileParser
 {
- public String date = "September";
+ public Date date;
  public int buyerId;
  public int productId;
  public int complaintId;
  public Rating rating = Rating.NONE;
  public Status status = Status.WAITING_CONFIRMATION;
  
- public Invoice(int id, int buyerId, int productId)
+ protected Invoice(int id, int buyerId, int productId, Date date)
  {
      super(id);
      this.buyerId = buyerId;
      this.productId = productId;
+     java.util.Date date = new java.util.Date();
+     this.date = date;
  }
  public enum Status
  {
@@ -30,18 +32,27 @@ public class Invoice extends Recognizable implements FileParser
      ON_DELIVERY,
      COMPLAINT,
      FINISHED,
-     FAILED
+     FAILED;
  }
  public enum Rating
  {
      NONE,
      BAD,
      NEUTRAL,
-     GOOD
+     GOOD;
+ }
+ public double getTotalPay()
+ {
+     return 0.0;
  }
  @Override
  public boolean read(String content)
  {
-    return false;
+    return true;
+ }
+ @Override
+ public Object write()
+ {
+     return null;
  }
 }

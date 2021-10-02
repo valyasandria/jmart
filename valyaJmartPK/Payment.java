@@ -18,6 +18,7 @@ public class Payment extends Invoice implements Transactor
         this.productCount = productCount;
         this.shipment = shipment;
     }
+    @Override
     public double getTotalPay()
     {
         return 0.0;
@@ -25,7 +26,7 @@ public class Payment extends Invoice implements Transactor
     @Override
     public boolean validate()
     {
-        return false;
+        return true;
     }
     @Override
     public Invoice perform()

@@ -24,11 +24,16 @@ public class Account extends Recognizable implements FileParser
     @Override
     public boolean read(String content)
     {
-        return false;
+        return true;
     }
-    
+    @Override
+    public Object write()
+    {
+        return null;
+    }
+    @Override
     public String toString()
     {
-        return("Name: Valya Sandria\nemail: valya.sandria@gmail.com\npassword: SH22051204" );
+        return("Name: " + this.name + "\nemail: " + this.email + "\npassword: " + this.password);
     }
 }

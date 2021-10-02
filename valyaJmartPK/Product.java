@@ -28,14 +28,33 @@ public Shipment.MultiDuration multiDuration;
      this.priceTag = priceTag;
      this.category = category;
      this.multiDuration = multiDuration;
+     this.rating = new ProductRating();
+ }
+ public Product(int id, Store store, String name, int weight, boolean conditionUsed,PriceTag priceTag, ProductCategory category)
+ {
+     super(id);
+     this.storeId = storeId;
+     this.name = name;
+     this.weight = weight;
+     this.conditionUsed = conditionUsed;
+     this.priceTag = priceTag;
+     this.category = category;
+     this.rating = new ProductRating();
+     this.storeId = store.id;
  }
  @Override 
  public boolean read(String content)
  {
-     return false;
+     return true;
  }
+ @Override
+ public Object write()
+ {
+     return null;
+ }
+ @Override
  public String toString()
  {
-     return ("Name: Thomas n Friends\nWight: 1\nconditionUsed: false\npriceTag: 150000.0\ncategory: Toys\nrating: 0\nstoreId: 1");
+     return ("Name: " + this.name + "\nweight: " + this.weight + "\nconditionUsed: " + this.conditionUsed + "\npriceTag: " + this.priceTag + "\ncategory: " + this.category + "\nrating: 0" + "\nstoreId: " + this.storeId);
  }
 }

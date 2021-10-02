@@ -58,8 +58,14 @@ public class Coupon extends Recognizable implements FileParser
     DISCOUNT,
     REBATE
  }
+ @Override
  public boolean read (String content)
  {
      return false;
+ }
+ @Override
+ public Object write()
+ {
+     return null;
  }
 }
