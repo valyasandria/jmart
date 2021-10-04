@@ -40,7 +40,9 @@ public class Store extends Recognizable implements FileParser
     {
         return null;
     }
-    @Override
+
+    
+    
     public boolean validate(){
         Pattern pattern = Pattern.compile("^[0-9] {9,12}$");
         Matcher matcher = pattern.matcher(phoneNumber);

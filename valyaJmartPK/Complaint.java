@@ -1,7 +1,6 @@
 package valyaJmartPK;
-
 import java.util.Date;
-
+import java.time.format.DateTimeFormatter;
 /**
  * Write a description of class Complaint here.
  *
@@ -10,14 +9,17 @@ import java.util.Date;
  */
 public class Complaint extends Recognizable implements FileParser
 {
-    public int paymentId;
+    
     public Date date ;
     public String desc;
-    Complaint(int id, Date date, String desc)
+
+    Complaint(int id,String desc)
     {
         super(id);
-    	java.util.Date myDate = new java.util.Date();
-        this.date = date;
+    	Date current_date = new Date();
+        SimpleDateFormat complaintDate = new SimpleDateFormat("dd/MM/yyyy");
+        String stringDate = complaintDate.format(current_date);
+        this.date = stringDate;
         this.desc = desc;
     }
     @Override
@@ -29,5 +31,9 @@ public class Complaint extends Recognizable implements FileParser
     public Object write()
     {
         return null;
+    }
+    public String toString()
+    {
+        return ("Complaint{date= " + this.date + "," + "desc= " + this.desc + "}");
     }
 }

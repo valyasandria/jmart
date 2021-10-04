@@ -1,5 +1,6 @@
 package valyaJmartPK;
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Write a description of class Account here.
@@ -9,6 +10,8 @@ package valyaJmartPK;
  */
 public class Account extends Recognizable implements FileParser
 {
+    final String REGEX_EMAIL;
+    final String REGEX_PASSWORD;
     public String name;
     public String email;
     public String password;
@@ -25,6 +28,38 @@ public class Account extends Recognizable implements FileParser
     public boolean read(String content)
     {
         return true;
+    }
+
+
+    public boolean validate()
+    {
+        //email
+        Pattern emailPattern = Pattern.compile("^[A-Z0-9.&_*~]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$", Pattern.CASE_INSENSITIVE);
+        Matcher matcher = emailPattern.matcher(email);
+        boolean emailFound = matcher.find();
+        String result = matchFound ? "FOUND!" : "NOT FOUND!";
+        if (result == "FOUND!")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+        
+        //password
+        Pattern passPattern = Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
+        Matcher matchPass = passPattern.matcher(password);
+        boolean passFound = matchPass.find();
+        String res ? "FOUND!" : "NOT FOUND!";
+        if (res == "FOUND!")
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
     @Override
     public Object write()

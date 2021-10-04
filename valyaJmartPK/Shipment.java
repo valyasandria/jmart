@@ -28,7 +28,7 @@ public class Shipment implements FileParser
    
     
    Calendar cal = Calendar.getInstance();
-   String current_date = ESTIMATION_FORMAT.format(cal.getTime());
+   String current_date = ESTIMATION_FORMAT.format(cal.setTime(reference));
    private Duration(byte bit)
    {
        this.bit = bit ;

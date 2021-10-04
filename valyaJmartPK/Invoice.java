@@ -1,5 +1,5 @@
 package valyaJmartPK;
-
+import java.util.ArrayList;
 import java.util.Date;
 /**
  * Write a description of class Invoice here.
@@ -15,14 +15,13 @@ public class Invoice extends Recognizable implements FileParser
  public int complaintId;
  public Rating rating = Rating.NONE;
  public Status status = Status.WAITING_CONFIRMATION;
+ public ArrayList<Record> history;
  
- protected Invoice(int id, int buyerId, int productId, Date date)
+ protected Invoice(int id, int buyerId, int productId)
  {
      super(id);
      this.buyerId = buyerId;
      this.productId = productId;
-     java.util.Date date = new java.util.Date();
-     this.date = date;
  }
  public enum Status
  {
@@ -41,15 +40,24 @@ public class Invoice extends Recognizable implements FileParser
      NEUTRAL,
      GOOD;
  }
- public double getTotalPay()
- {
-     return 0.0;
- }
  @Override
  public boolean read(String content)
  {
     return true;
  }
+
+ public double getTotalPay()
+ {
+     return 0.0;
+ }
+ 
+ public class Record
+ {
+     public Date date;
+     public String message;
+     public Status status;
+ }
+
  @Override
  public Object write()
  {
