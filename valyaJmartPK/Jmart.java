@@ -11,7 +11,6 @@ public class Jmart
 {
  public static void main(String[] args)
  {
-    String myPass = "kjmSH221_ok";
-    System.out.println(myPass.Account.matches(passPattern));
+    
  }
 }

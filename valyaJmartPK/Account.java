@@ -51,7 +51,8 @@ public class Account extends Recognizable implements FileParser
         Pattern passPattern = Pattern.compile("(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}");
         Matcher matchPass = passPattern.matcher(password);
         boolean passFound = matchPass.find();
-        String res ? "FOUND!" : "NOT FOUND!";
+        String matchFound;
+        String res = matchFound ? "FOUND!" : "NOT FOUND!";
         if (res == "FOUND!")
         {
             return true;
