@@ -89,32 +89,42 @@ public class Algorithm {
 
     public <T> boolean exist (T[] array, T value)
     {
-        return false;
-
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return exist(it, value);
     }
 
     public <T> boolean exist (Iterable <T> iterable, T value)
     {
-        return false;
+        final Iterator<T> it = iterable.iterator();
+        return exist(it, value);
     }
 
     public <T> boolean exist (Iterator <T> iterator, T value)
     {
-        return false;
+        final Predicate <T> pred = value::equals;
+        return exist(iterator, value);
     }
 
     public <T> boolean exist (T[] array, Predicate<T> pred)
     {
-        return false;
+        final Iterator<T> it = Arrays.stream(array).iterator();
+        return exist(it, pred);
     }
 
     public <T> boolean exist (Iterable <T> iterable, Predicate<T> pred)
     {
-        return false;
+        final Iterator<T> it = iterable.iterator();
+        return exist(it, pred);
     }
 
     public <T> boolean exist (Iterator <T> iterator, Predicate<T> pred)
     {
+        while(iterator.hasNext())
+        {
+            if (iterator.next().equals(pred)){
+                return true;
+            }
+        }
         return false;
     }
 
