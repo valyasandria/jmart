@@ -7,33 +7,26 @@ import java.text.SimpleDateFormat;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Complaint extends Recognizable implements FileParser
+public class Complaint extends Serializable
 {
-    
     public Date date ;
     public String desc;
 
-    Complaint(int id,String desc)
+    Complaint(String desc)
     {
-        super(id);
-    	Date current_date = new Date();
-        SimpleDateFormat complaintDate = new SimpleDateFormat("dd/MM/yyyy");
-        String date = complaintDate.format(current_date);
-        
         this.desc = desc;
+        this.date = new Date();
     }
-    @Override
-    public boolean read(String content)
+
+    public boolean validate()
     {
-        return true;
+        return false;
     }
-    @Override
-    public Object write()
-    {
-        return null;
+
+    public String toString(){
+        SimpleDateFormat SDformat = new SimpleDateFormat("dd/MM/yyyy");
+        String formatDate = SDformat.format(this.date);
+        return "{date = " + formatDate + "desc = '" + this.desc + "'}";
     }
-    public String toString()
-    {
-        return ("Complaint{date= " + date + "," + "desc= " + this.desc + "}");
-    }
+
 }

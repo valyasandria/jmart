@@ -7,7 +7,7 @@ import java.util.Date;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Invoice extends Recognizable implements FileParser
+public class Invoice extends Serializable
 {
  public Date date;
  public int buyerId;
@@ -19,7 +19,6 @@ public class Invoice extends Recognizable implements FileParser
  
  protected Invoice(int id, int buyerId, int productId)
  {
-     super(id);
      this.buyerId = buyerId;
      this.productId = productId;
  }
@@ -40,11 +39,6 @@ public class Invoice extends Recognizable implements FileParser
      NEUTRAL,
      GOOD;
  }
- @Override
- public boolean read(String content)
- {
-    return true;
- }
 
  public double getTotalPay()
  {
@@ -58,9 +52,4 @@ public class Invoice extends Recognizable implements FileParser
      public Status status;
  }
 
- @Override
- public Object write()
- {
-     return null;
- }
 }
