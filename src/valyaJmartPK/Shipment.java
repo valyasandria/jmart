@@ -10,12 +10,12 @@ import java.text.SimpleDateFormat;
  */
 public class Shipment
 {
-    public SimpleDateFormat ESTIMATION_FORMAT;
-    public Plan INSTANT;
-    public Plan KARGO;
-    public Plan NEXT_DAY;
-    public Plan REGULER;
-    public Plan SAME_DAY;
+    public static final SimpleDateFormat ESTIMATION_FORMAT = new SimpleDateFormat("E MMMM dd yyyy");
+    public static final Plan INSTANT = new Plan((byte)(1 << 0));    //1
+    public static final Plan SAME_DAY = new Plan((byte)(1 << 1));   //2
+    public static final Plan NEXT_DAY = new Plan((byte)(1 << 2));   //4
+    public static final Plan REGULER = new Plan((byte)(1 << 3));    //8
+    public static final Plan KARGO = new Plan((byte)(1 << 4));      //16
 
    public String address;
    public int cost;
@@ -62,19 +62,34 @@ public class Shipment
 
     public boolean isDuration(Plan reference)
     {
-        return (this.plan & reference.bit) != 0;
+        if((reference.bit & this.plan) != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
     public boolean isDuration(byte object, Plan reference)
     {
-        return (this.plan & reference.bit) != 0;
+        if((reference.bit & object) != 0)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
     }
 
-   public class Plan
+   public static class Plan
    {
-       byte bit;
-       public Plan (byte bit)
+       public final byte bit;
+       private Plan (byte bit)
        {
+           this.bit = bit;
        }
    }
 }

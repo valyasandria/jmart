@@ -3,9 +3,6 @@ package valyaJmartPK;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.io.*;
-import java.io.File;
-import java.io.IOException;
 
 /**
  * Write a description of class Recognizable here.
@@ -13,23 +10,28 @@ import java.io.IOException;
  * @author (your name)
  * @version (a version number or a date)
  */
-public abstract class Serializable implements Comparable <Serializable>
+public class Serializable implements Comparable <Serializable>
 {
      public final int id;
-     private HashMap<Integer, Class<?>> mapCounter = new HashMap<>();
-     
+     private HashMap<Class<?>, Integer> mapCounter = new HashMap<>();
+
      protected Serializable()
      {
-         int count = 0;
-         this.id = count++;
-         mapCounter.put(0, getClass());
-
+         id = 1;
+         Integer count = mapCounter.get(getClass());
+         if(count == null)
+         {
+             count = 0;
+         }
+         else
+         {
+             mapCounter.put(getClass(), count + 1);
+         }
      }
 
     public int compareTo (Serializable other)
     {
-        return other.id/this.id;
-
+        return Integer.compare(this.id, other.id);
     }
 
      public boolean equals(Object other)

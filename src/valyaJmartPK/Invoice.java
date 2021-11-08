@@ -7,20 +7,24 @@ import java.util.Date;
  * @author (your name)
  * @version (a version number or a date)
  */
-public class Invoice extends Serializable
+public abstract class Invoice extends Serializable
 {
  public Date date;
  public int buyerId;
  public int productId;
  public int complaintId;
- public Rating rating = Rating.NONE;
- public Status status = Status.WAITING_CONFIRMATION;
+ public Rating rating;
+ public Status status;
  public ArrayList<Record> history;
  
- protected Invoice(int id, int buyerId, int productId)
+ protected Invoice(int buyerId, int productId)
  {
      this.buyerId = buyerId;
      this.productId = productId;
+     this.date = new Date();
+     this.complaintId = 1;
+     this.rating = Rating.NONE;
+     this.status = Status.WAITING_CONFIRMATION;
  }
  public enum Status
  {
@@ -40,10 +44,7 @@ public class Invoice extends Serializable
      GOOD;
  }
 
- public double getTotalPay()
- {
-     return 0.0;
- }
+ public abstract double getTotalPay();
  
  public class Record
  {

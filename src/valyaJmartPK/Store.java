@@ -31,18 +31,10 @@ public class Store
     }
 
     public boolean validate(){
-        Pattern pattern = Pattern.compile("^[0-9] {9,12}$");
-        Matcher matcher = pattern.matcher(phoneNumber);
-        boolean matchFound = matcher.find();
-        String result = matchFound ? "FOUND!" : "NOT FOUND!";
-        if (result == "FOUND!")
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        Pattern pattern = Pattern.compile("^(/d{9,12})$");
+        Matcher matcher = pattern.matcher(this.phoneNumber);
+        Pattern pattern2 = Pattern.compile("^(?=^[A-Z])(?![A-Z a-z]{20,})((?=[A-Z a-z]{4,}).)((?!\\s{2}).)*$");
+        Matcher matcher2 = pattern2.matcher(this.name);
+        return matcher.find() && matcher2.find();
     }
-
 }

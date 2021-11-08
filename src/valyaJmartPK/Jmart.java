@@ -7,7 +7,9 @@ import java.util.List;
 import com.google.gson.*;
 import com.google.gson.stream.JsonReader;
 
-import java.io.File;
+import java.io.*;
+import java.util.*;
+
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
@@ -27,9 +29,26 @@ class Jmart
         public List<String> listOfStates;
     }
 
+    public static List<Product> filterByAccountId (List<Product>list, int accountId, int page, int pageSize)
+    {
+        //list.stream().filter(listProduct -> paginate(list, page, pageSize, ).forEach(System.out::println);
+        return list;
+    }
+
     public static List<Product> filterByCategory (List<Product> list, ProductCategory category){
         System.out.println(list);
         return list;
+    }
+
+    public static List<Product> filterByName (List<Product>list, String search, int page, int pageSize)
+    {
+        if (list.contains(search)){
+            list = new ArrayList<Product>();
+        }
+        else{
+            list = null;
+        }
+            return list;
     }
 
     public static List<Product> filterByPrice (List<Product> list,  double minPrice, double maxPrice){
@@ -50,20 +69,26 @@ class Jmart
 
     }
 
+    public static List<Product> paginate (List<Product> list, int page, int pageSize, Predicate<Product> pred)
+    {
+        return null;
+    }
+
     public static List<Product> read (String filepath)
     {
         return null;
     }
 
+
  public static void main(String[] args)
  {
-     System.out.println("account id: " + new Account(0,null, null, null, -1).id);
-     System.out.println("account id: " + new Account(0,null, null, null, -1).id);
-     System.out.println("account id: " + new Account(0,null, null, null, -1).id);
+     System.out.println("account id : " + new Account(null, null, null, -1).id);
+     System.out.println("account id : " + new Account(null, null, null, -1).id);
+     System.out.println("account id : " + new Account(null, null, null, -1).id);
 
-     System.out.println("payment id: " + new Account(-1, null, null, null, -1).id);
-     System.out.println("paymemt id: " + new Account(-1,null, null, null, -1).id);
-     System.out.println("payment id: " + new Account(-1,null, null, null, -1).id);
+     System.out.println("account id : " + new Payment(-1, -1, -1, null).id);
+     System.out.println("account id : " + new Payment(-1, -1, -1, null).id);
+     System.out.println("account id : " + new Payment(-1, -1, -1, null).id);
 
      String filepath = "D:/Praktikum OOP/jmart/city.json";
      Gson gson = new Gson();
@@ -88,7 +113,7 @@ class Jmart
          final JsonReader reader = new JsonReader(new FileReader(filepath2));
          List<Product> list = read(filepath2);
          List<Product> filtered = filterByPrice(list, 0.0, 20000.0);
-         filtered.forEach(product -> System.out.println(product.price));
+         //filtered.forEach(product -> System.out.println(product.price));
 
      }
      catch (Throwable t)
