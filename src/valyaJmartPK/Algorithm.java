@@ -42,7 +42,7 @@ public class Algorithm {
         return collect(it, pred);
     }
 
-    public <T> List<T> collect(Iterable<T> iterable, Predicate<T> pred)
+    public static <T> List<T> collect(Iterable<T> iterable, Predicate<T> pred)
     {
         return null;
     }
