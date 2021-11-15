@@ -1,6 +1,9 @@
 package valyaJmartPK;
 
 
+import java.util.ArrayList;
+import java.util.Date;
+
 /**
  * Write a description of class Payment here.
  *
@@ -11,6 +14,7 @@ public class Payment extends Invoice
 {
     public Shipment shipment;
     public int productCount;
+    public static ArrayList<Record> history = new ArrayList<Record>();
     
     public Payment(int buyerId, int productId, int productCount, Shipment shipment)
     {
@@ -19,8 +23,21 @@ public class Payment extends Invoice
         this.shipment = shipment;
     }
 
-    public double getTotalPay()
+    @Override
+    public double getTotalPay(Product product) {
+        return (product.price-((product.discount/100)*product.price)*productCount) + shipment.cost;
+    }
+
+    public static class Record
     {
-        return 0.0;
+        public final Date date = new Date();
+        public String message;
+        public Status status;
+
+        public Record(Status status, String message)
+        {
+            this.status = status;
+            this.message = message;
+        }
     }
 }

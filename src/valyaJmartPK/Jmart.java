@@ -1,9 +1,11 @@
 package valyaJmartPK;
 
+import com.google.gson.Gson;
 import com.google.gson.stream.JsonReader;
 
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,9 +18,13 @@ import java.util.List;
  */
 class Jmart
 {
+    public static long DELIVERED_LIMIT_MS = 3;
+    public static long ON_DELIVERY_LIMIT_MS = 2;
+    public static long ON_PROGRESS_LIMIT_MS = 1;
+    public static long WAITING_CONF_LIMIT_MS = 2;
 
 
-    public static List<Product> filterByAccountId (List<Product>list, int accountId, int page, int pageSize)
+    /*public static List<Product> filterByAccountId (List<Product>list, int accountId, int page, int pageSize)
     {
         return paginate(list, page, pageSize, product -> product.accountId == accountId);
     }
@@ -77,9 +83,35 @@ class Jmart
         return null;
     }
 
-
+*/
  public static void main(String[] args)
  {
+
+     try
+     {
+         JsonTable<Payment> table = new JsonTable<>(Payment.class, "randomPaymentList.json");
+         ObjectPoolThread<Payment> paymentPool = new ObjectPoolThread<Payment>("Thread-PP", Jmart::paymentTimeKeeper);
+         paymentPool.start();
+
+         //table.forEach(payment -> paymentPool.add(payment));
+         while(paymentPool.size() != 0);
+             paymentPool.exit();
+
+         while(paymentPool.isAlive());
+         System.out.println("Thread exited successfully");
+
+         Gson gson = new Gson();
+
+         table.forEach(payment -> {
+             //String history = gson.toJson(payment.history);
+             //System.out.println(history);
+         });
+     }
+     catch (Throwable t) {
+         t.printStackTrace();
+     }
+
+     /*
      System.out.println("account id : " + new Account(null, null, null).id);
      System.out.println("account id : " + new Account(null, null, null).id);
      System.out.println("account id : " + new Account(null, null, null).id);
@@ -115,5 +147,31 @@ class Jmart
      catch (Throwable t){
          t.printStackTrace();
      }
+      */
+ }
+
+ public static boolean paymentTimeKeeper(Payment payment)
+ {
+
+
+     long start = System.currentTimeMillis();
+     long finish = System.currentTimeMillis();
+     long timeElapsed = finish - start;
+
+     if (timeElapsed > WAITING_CONF_LIMIT_MS){
+         //Payment.history = Invoice.Status.FAILED;
+     }
+     else if(timeElapsed > ON_PROGRESS_LIMIT_MS){
+        //Payment.history = Invoice.Status.FAILED;
+     }
+     else if(timeElapsed > ON_DELIVERY_LIMIT_MS){
+         //Payment.history = Invoice.Status.DELIVERED;
+     }
+     else if(timeElapsed > DELIVERED_LIMIT_MS){
+         //Payment.history = Invoice.Status.FINISHED;
+     }
+
+
+     return false;
  }
 }
