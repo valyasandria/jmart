@@ -1,4 +1,6 @@
 package com.valyaJmartPK;
+import com.valyaJmartPK.dbjson.Serializable;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,6 +19,7 @@ public class Account extends Serializable
     public String email;
     public String password;
     public double balance;
+    public Store store;
 
     public Account(String name, String email, String password, double balance)
     {
@@ -28,11 +31,11 @@ public class Account extends Serializable
 
     }
 
-    public boolean validate(String email)
+    public boolean validate(String email, String password)
     {
         //validasi email
         Pattern emailPattern = Pattern.compile(REGEX_EMAIL);
-        Matcher matcher = emailPattern.matcher(this.email);
+        Matcher matcher = emailPattern.matcher(email);
 
         //validasi password
         Pattern passPattern = Pattern.compile(REGEX_PASSWORD);

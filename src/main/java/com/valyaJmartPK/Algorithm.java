@@ -161,7 +161,7 @@ public class Algorithm {
         return null;
     }
 
-    public <T> T find (Iterable <T> iterable, Predicate<T> pred)
+    public static <T> T find(Iterable<T> iterable, Predicate<T> pred)
     {
         for (T x : iterable){
             if(x.equals(pred)){

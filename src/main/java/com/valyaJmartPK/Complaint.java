@@ -1,4 +1,6 @@
 package com.valyaJmartPK;
+import com.valyaJmartPK.dbjson.Serializable;
+
 import java.util.Date;
 import java.text.SimpleDateFormat;
 /**

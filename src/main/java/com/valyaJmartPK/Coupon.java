@@ -1,6 +1,8 @@
 package com.valyaJmartPK;
 
 
+import com.valyaJmartPK.dbjson.Serializable;
+
 /**
  * Class Coupon
  *

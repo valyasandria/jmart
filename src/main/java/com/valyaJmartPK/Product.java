@@ -1,5 +1,7 @@
 package com.valyaJmartPK;
 
+import com.valyaJmartPK.dbjson.Serializable;
+
 /**
  * class Product
  *

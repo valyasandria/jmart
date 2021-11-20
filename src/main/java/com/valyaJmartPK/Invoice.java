@@ -1,5 +1,6 @@
 package com.valyaJmartPK;
-import java.util.ArrayList;
+import com.valyaJmartPK.dbjson.Serializable;
+
 import java.util.Date;
 /**
  * Write a description of class Invoice here.
