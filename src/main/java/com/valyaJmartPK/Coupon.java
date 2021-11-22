@@ -40,7 +40,7 @@ public class Coupon extends Serializable
         }
     }
 
-    public boolean canApply(double price, double discount)
+    public static boolean canApply(double price, double discount)
     {
         if((Treasury.getAdjustedPrice(this.minimum, this.cut) >= this.minimum) && (!this.used))
         {
@@ -52,7 +52,7 @@ public class Coupon extends Serializable
         }
     }
 
-     public boolean isUsed()
+     public static boolean isUsed()
      {
          return used;
      }

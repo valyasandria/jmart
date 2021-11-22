@@ -1,5 +1,6 @@
 package com.valyaJmartPK;
 
+import com.valyaJmartPK.dbjson.JsonDBEngine;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -97,8 +98,10 @@ class Jmart
 */
  public static void main(String[] args)
  {
-     SpringApplication.run(Jmart.class, args);
 
+     JsonDBEngine.Run(Jmart.class);
+     SpringApplication.run(Jmart.class, args);
+     Runtime.getRuntime().addShutdownHook(new Thread(()->JsonDBEngine.join()));
     /*
      try
      {

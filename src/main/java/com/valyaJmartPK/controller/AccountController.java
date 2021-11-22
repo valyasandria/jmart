@@ -7,6 +7,8 @@ import com.valyaJmartPK.dbjson.JsonAutowired;
 import com.valyaJmartPK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -41,11 +43,32 @@ public abstract class AccountController implements BasicGetController<Account> {
                     @RequestParam double balance
             )
     {
+        String passToHash = password;
+        String generatedPassword = null;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(passToHash.getBytes());
+
+            byte[] bytes = md.digest();
+
+            //convert to hex
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            generatedPassword = sb.toString();
+
+        }
+        catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
 
         Matcher matcher = REGEX_PATTERN_EMAIL.matcher(email);
         Matcher matchPass = REGEX_PATTERN_PASSWORD.matcher(password);
 
-        if(matcher.find() && matchPass.find())
+        if(matcher.find() && matchPass.find() && password.equals(generatedPassword))
         {
             return new Account(name, email, password, 0);
         }
@@ -58,18 +81,40 @@ public abstract class AccountController implements BasicGetController<Account> {
 
     @PostMapping ("/register")
     Account Register
+
             (
                     @RequestParam String name,
                     @RequestParam String email,
                     @RequestParam String password
 
             )
-    {
 
-        if (name != null){
+    {
+        String passwordToHash = password;
+        String generatedPassword = null;
+
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(passwordToHash.getBytes());
+
+            byte[] bytes = md.digest();
+
+            //convert to hex
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+            generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
+        }
+
+        password = generatedPassword;
+
+        if (name != null) {
             return new Account(name, email, password, 0);
         }
-        else{
+        else {
             return null;
         }
     }

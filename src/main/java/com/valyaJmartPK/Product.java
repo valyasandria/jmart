@@ -10,7 +10,7 @@ import com.valyaJmartPK.dbjson.Serializable;
  */
 public class Product extends Serializable
 {
-    public int accountId;
+    public static int accountId;
     public ProductCategory category;
     public boolean conditionUsed;
     public double discount;
