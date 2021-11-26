@@ -8,7 +8,7 @@ import java.util.Date;
  * @author (your name)
  * @version (a version number or a date)
  */
-public  class Invoice extends Serializable
+public abstract class Invoice extends Serializable
 {
      public final Date date = new Date();
      public int buyerId;
@@ -24,7 +24,11 @@ public  class Invoice extends Serializable
 
      }
 
-     public enum Status
+    public double getTotalPay(Product product) {
+        return 0;
+    }
+
+    public static enum Status
      {
          WAITING_CONFIRMATION,
          CANCELLED,
@@ -35,17 +39,12 @@ public  class Invoice extends Serializable
          FAILED;
      }
 
-     public enum Rating
+     public static enum Rating
      {
          NONE,
          BAD,
          NEUTRAL,
          GOOD;
-     }
-
-     public double getTotalPay(Product product)
-     {
-         return 0.0;
      }
 
 }

@@ -22,7 +22,15 @@ public class CouponController implements BasicGetController<Coupon> {
 
     @GetMapping("{id}/isUsed")
     boolean isUsed(@PathVariable int id){
-        return Coupon.isUsed();
+        Coupon coupon = Algorithm.<Coupon>find(getJsonTable(), e->e.id == id);
+        if (coupon != null)
+        {
+            return coupon.isUsed();
+        }
+        else
+        {
+            return true;
+        }
     }
 
     @GetMapping("{id}/canApply")
@@ -32,16 +40,22 @@ public class CouponController implements BasicGetController<Coupon> {
              @RequestParam double discount
             )
     {
-        return Coupon.canApply(price, discount);
+        Coupon coupon = Algorithm.<Coupon>find(getJsonTable(), e->e.id == id);
+        if (coupon != null){
+            return coupon.canApply(price, discount);
+        }
+        else
+        {
+            return true;
+        }
     }
 
     @GetMapping("{id}/canAvailable")
-    List<Coupon> getAvailable
-            (
-             @RequestParam int page,
-             @RequestParam int pageSize
+    public List<Coupon> getAvailable
+            (@RequestParam(defaultValue = "1") int page,
+             @RequestParam(defaultValue = "2") int pageSize
             )
     {
-        return Algorithm.<Coupon>paginate(getJsonTable(), page, pageSize, e -> false);
+        return Algorithm.<Coupon>paginate(getJsonTable(), page, pageSize, e-> !e.isUsed());
     }
 }

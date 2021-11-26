@@ -30,19 +30,20 @@ public class Coupon extends Serializable
 
     public double apply(double price, double discount)
     {
-        this.used = true;
-        if(type == Type.REBATE)
+        used = true;
+        if (type == Type.DISCOUNT)
         {
-            return (Treasury.getAdjustedPrice(this.minimum, this.cut) - cut );
+            return Treasury.getAdjustedPrice(price, discount) * (100.0-cut)/100;
         }
-        else{
-            return (Treasury.getAdjustedPrice(this.minimum, this.cut) * (1-(cut/100)));
+        else
+        {
+            return Treasury.getAdjustedPrice(price, discount) - cut;
         }
     }
 
-    public static boolean canApply(double price, double discount)
+    public boolean canApply(double price, double discount)
     {
-        if((Treasury.getAdjustedPrice(this.minimum, this.cut) >= this.minimum) && (!this.used))
+        if (Treasury.getAdjustedPrice(price, discount) >= minimum && used == false)
         {
             return true;
         }
@@ -52,12 +53,12 @@ public class Coupon extends Serializable
         }
     }
 
-     public static boolean isUsed()
+     public boolean isUsed()
      {
          return used;
      }
 
-     public static enum Type
+     public enum Type
      {
         DISCOUNT,
         REBATE

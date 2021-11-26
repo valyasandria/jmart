@@ -12,8 +12,8 @@ import java.util.Date;
  */
 public class Payment extends Invoice
 {
-    public Shipment shipment;
-    public int productCount;
+    public static Shipment shipment;
+    public static int productCount;
     public static ArrayList<Record> history = new ArrayList<Record>();
     
     public Payment(int buyerId, int productId, int productCount, Shipment shipment)
@@ -23,7 +23,7 @@ public class Payment extends Invoice
         this.shipment = shipment;
     }
 
-    @Override
+
     public double getTotalPay(Product product) {
         return (product.price-((product.discount/100)*product.price)*productCount) + shipment.cost;
     }

@@ -33,7 +33,15 @@ public class ProductController implements BasicGetController<Product> {
     Product create
             (int accountId, String name, int weight, boolean conditionUsed, double price,double discount,ProductCategory category, byte shipmentPlans)
     {
+        Product myAcc = Algorithm.<Product>find(productTable, (e) -> e.accountId == accountId);
+        //if (myAcc != null && myAcc.store != null )
+        //{
+        //    return new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
+        //}
+        //else
+        //{
         return null;
+        //}
     }
     @GetMapping ("/getProductFiltered")
     List<Product> getProductFiltered

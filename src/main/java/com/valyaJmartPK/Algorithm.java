@@ -11,8 +11,8 @@ public class Algorithm {
     private Algorithm(){
 
     }
-    //method collect
 
+    //method collect
     public static <T> List<T> collect(T[] array, T value)
     {
         List<T> list = new ArrayList<>();
@@ -36,7 +36,7 @@ public class Algorithm {
         return collect(iterator, value);
     }
 
-    public <T> List<T> collect(T[] array, Predicate<T> pred)
+    public static <T> List<T> collect(T[] array, Predicate<T> pred)
     {
         final Iterator<T> it = Arrays.stream(array).iterator();
         return collect(it, pred);
@@ -44,10 +44,11 @@ public class Algorithm {
 
     public static <T> List<T> collect(Iterable<T> iterable, Predicate<T> pred)
     {
-        return null;
+        final Predicate<T> predicate = pred::equals;
+        return collect(iterable, pred);
     }
 
-    public <T> List<T> collect(Iterator<T> iterator, Predicate<T> pred)
+    public static<T> List<T> collect(Iterator<T> iterator, Predicate<T> pred)
     {
         int count = 0;
         while(iterator.hasNext()){
@@ -81,7 +82,7 @@ public class Algorithm {
         return count;
     }
 
-    public <T> int count(T[] array, Predicate<T> pred)
+    public static <T> int count(T[] array, Predicate<T> pred)
     {
         int count = 0;
         if (pred.equals(false)) {
@@ -94,7 +95,7 @@ public class Algorithm {
         return count;
     }
 
-    public <T> int count(Iterable<T> iterable, Predicate<T> pred)
+    public static <T> int count(Iterable<T> iterable, Predicate<T> pred)
     {
         int count = 0;
         if (pred.equals(false)) {
@@ -107,7 +108,7 @@ public class Algorithm {
         return count;
     }
 
-    public <T> int count(Iterator<T> iterator, Predicate<T> pred)
+    public static <T> int count(Iterator<T> iterator, Predicate<T> pred)
     {
         int count = 0;
         if (pred.equals(false)) {
@@ -121,7 +122,7 @@ public class Algorithm {
     }
 
     //method find
-    public <T> T find (T[] array, T value)
+    public static <T> T find (T[] array, T value)
     {
         for (T x:array){
             if(x.equals(value)){
@@ -131,7 +132,7 @@ public class Algorithm {
         return null;
     }
 
-    public <T> T find (Iterable <T> iterable, T value)
+    public static <T> T find (Iterable <T> iterable, T value)
     {
         for (T x:iterable){
             if(x.equals(value)){
@@ -141,7 +142,7 @@ public class Algorithm {
         return null;
     }
 
-    public <T> T find (Iterator <T> iterator, T value)
+    public static <T> T find (Iterator <T> iterator, T value)
     {
         while (iterator.hasNext()){
             if(iterator.next().equals(value)){
@@ -151,7 +152,7 @@ public class Algorithm {
         return null;
     }
 
-    public <T> T find (T[] array, Predicate<T> pred)
+    public static <T> T find (T[] array, Predicate<T> pred)
     {
         for (T x:array){
             if(x.equals(pred)){
@@ -171,7 +172,7 @@ public class Algorithm {
         return null;
     }
 
-    public <T> T find (Iterator <T> iterator, Predicate<T> pred)
+    public static <T> T find (Iterator <T> iterator, Predicate<T> pred)
     {
         while (iterator.hasNext()){
             if(iterator.next().equals(pred)){
@@ -182,7 +183,7 @@ public class Algorithm {
     }
 
     //method exist
-    public <T> boolean exist (T[] array, T value)
+    public static <T> boolean exist (T[] array, T value)
     {
         for (T x: array){
             if(x.equals(value)){
@@ -192,7 +193,7 @@ public class Algorithm {
         return false;
     }
 
-    public <T> boolean exist (Iterable <T> iterable, T value)
+    public static <T> boolean exist (Iterable <T> iterable, T value)
     {
         for (T x:iterable){
             if(x.equals(value)){
@@ -202,7 +203,7 @@ public class Algorithm {
         return false;
     }
 
-    public <T> boolean exist (Iterator <T> iterator, T value)
+    public static <T> boolean exist (Iterator <T> iterator, T value)
     {
         while (iterator.hasNext()){
             if (iterator.next().equals(value)){
@@ -212,7 +213,7 @@ public class Algorithm {
         return false;
     }
 
-    public <T> boolean exist (T[] array, Predicate<T> pred)
+    public static <T> boolean exist (T[] array, Predicate<T> pred)
     {
         for (T x:array){
             if(x.equals(pred)){
@@ -222,7 +223,7 @@ public class Algorithm {
         return false;
     }
 
-    public <T> boolean exist (Iterable <T> iterable, Predicate<T> pred)
+    public static <T> boolean exist (Iterable <T> iterable, Predicate<T> pred)
     {
         for (T x:iterable){
             if(x.equals(pred)){
@@ -232,7 +233,7 @@ public class Algorithm {
         return false;
     }
 
-    public <T> boolean exist (Iterator <T> iterator, Predicate<T> pred)
+    public static <T> boolean exist (Iterator <T> iterator, Predicate<T> pred)
     {
         while(iterator.hasNext())
         {
@@ -244,13 +245,13 @@ public class Algorithm {
     }
 
     //method max
-    public <T> T max (T first, T second)
+    public static <T> T max (T first, T second)
     {
 
         return null;
     }
 
-    public <T> T max (T[] array)
+    public static <T> T max (T[] array)
     {
         int max = 0;
         T maxT = null;
@@ -263,7 +264,7 @@ public class Algorithm {
         return maxT;
     }
 
-    public <T> T max (Iterable <T> iterable)
+    public static <T> T max (Iterable <T> iterable)
     {
         int max = 0;
         T maxT = null;
@@ -276,7 +277,7 @@ public class Algorithm {
         return maxT;
     }
 
-    public <T> T max (Iterator <T> iterator)
+    public static <T> T max (Iterator <T> iterator)
     {
         int max = 0;
         T maxT = null;
@@ -289,18 +290,18 @@ public class Algorithm {
         return maxT;
     }
 
-    public <T> T max (T first, T second, Comparator<? super T> comparator)
+    public static <T> T max (T first, T second, Comparator<? super T> comparator)
     {
         int result = ((Comparable<T>) first).compareTo(second);
         return result < -1? second : first;
     }
 
-    public <T> T max (T[] array, Comparator<? super T> comparator)
+    public static <T> T max (T[] array, Comparator<? super T> comparator)
     {
         return null;
     }
 
-    public <T> T max (Iterable<T> iterable, Comparator<? super T> comparator)
+    public static <T> T max (Iterable<T> iterable, Comparator<? super T> comparator)
     {
         T maxT = null;
         for(T m:iterable) {
@@ -311,7 +312,7 @@ public class Algorithm {
         return maxT;
     }
 
-    public <T> T max (Iterator<T> iterator, Comparator<? super T> comparator)
+    public static <T> T max (Iterator<T> iterator, Comparator<? super T> comparator)
     {
         T maxT = null;
         for (Iterator<T> it = iterator; it.hasNext(); ) {
@@ -324,7 +325,7 @@ public class Algorithm {
     }
 
     //method min
-    public <T> T min (T first, T second)
+    public static <T> T min (T first, T second)
     {
         if(first.hashCode()>second.hashCode())
         {
@@ -336,7 +337,7 @@ public class Algorithm {
         }
     }
 
-    public <T> T min (T[] array)
+    public static <T> T min (T[] array)
     {
         int min = array[0].hashCode();
         T minT = null;
@@ -349,7 +350,7 @@ public class Algorithm {
         return minT;
     }
 
-    public <T> T min (Iterable <T> iterable)
+    public static <T> T min (Iterable <T> iterable)
     {
         int min = iterable.hashCode();
         T minT = null;
@@ -362,7 +363,7 @@ public class Algorithm {
         return minT;
     }
 
-    public <T> T min (Iterator <T> iterator)
+    public static <T> T min (Iterator <T> iterator)
     {
         int min = iterator.next().hashCode();
         T minT = null;
@@ -375,7 +376,7 @@ public class Algorithm {
         return minT;
     }
 
-    public <T> T min (T first, T second, Comparator<? super T> comparator)
+    public static <T extends Comparable <? super T>> T min (T first, T second, Comparator<? super T> comparator)
     {
         int result = ((Comparable<T>) first).compareTo(second);
         return result > -1? second : first;
