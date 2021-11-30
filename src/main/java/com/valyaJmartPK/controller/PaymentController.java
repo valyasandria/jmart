@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payment")
-public abstract class PaymentController implements BasicGetController<Payment>{
+public class PaymentController implements BasicGetController<Payment>{
 
     public static final long DELIVERED_LIMIT_MS = 1000;
     public static final long ON_DELIVERY_LIMIT_MS = 1000;
@@ -16,7 +16,7 @@ public abstract class PaymentController implements BasicGetController<Payment>{
     public static final long WAITING_CONF_LIMIT_MS = 1000;
     public static ObjectPoolThread<Payment> poolThread;
 
-    @JsonAutowired(value = Payment.class, filepath = "D:/Praktikum OOP/jmart/payment.json")
+    @JsonAutowired(value = Payment.class, filepath = "D://Praktikum OOP/jmart/payment.json")
     public static JsonTable<Payment> paymentTable;
 
     static

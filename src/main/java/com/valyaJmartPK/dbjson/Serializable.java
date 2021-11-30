@@ -1,6 +1,5 @@
 package com.valyaJmartPK.dbjson;
 
-
 import java.util.HashMap;
 
 
@@ -13,7 +12,7 @@ import java.util.HashMap;
 public class Serializable implements Comparable<Serializable>
 {
     private static HashMap<Class<?>, Integer> mapCounter = new HashMap<>();
-    public static int id = 0;
+    public final int id;
 
     protected Serializable()
     {

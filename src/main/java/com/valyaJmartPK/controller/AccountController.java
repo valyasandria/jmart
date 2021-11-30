@@ -9,25 +9,23 @@ import org.springframework.web.bind.annotation.*;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("/account")
-public abstract class AccountController implements BasicGetController<Account> {
+public class AccountController implements BasicGetController<Account> {
 
-    public static String REGEX_EMAIL = "^[A-Z0-9.&_*~]+@[A-Z0-9.-]+\\.[A-Z]{2,6}$";
-    public static String REGEX_PASSWORD = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{8,}";
-    public static Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
-    public static Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
+    public static final String REGEX_EMAIL = "^\\w+([\\.&`~-]?\\w+)*@\\w+([\\.-]?\\w+)+$";
+    public static final String REGEX_PASSWORD = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)[a-zA-Z\\d][^-\\s]{8,}$";
+    public static final Pattern REGEX_PATTERN_EMAIL = Pattern.compile(REGEX_EMAIL);
+    public static final Pattern REGEX_PATTERN_PASSWORD = Pattern.compile(REGEX_PASSWORD);
 
-    @JsonAutowired(value = Account.class, filepath = "D:/Praktikum OOP/jmart/account.json")
+    @JsonAutowired(value = Account.class, filepath = "D://Praktikum OOP/jmart/account.json")
     public static JsonTable<Account> accountTable;
 
     public JsonTable<Account> getJsonTable(){
         return accountTable;
     }
-
 
     @GetMapping
     String index() {
@@ -35,20 +33,19 @@ public abstract class AccountController implements BasicGetController<Account> {
     }
 
     @PostMapping("/login")
-    Account login
+    public Account login
             (
-                    @RequestParam String name,
                     @RequestParam String email,
-                    @RequestParam String password,
-                    @RequestParam double balance
+                    @RequestParam String password
             )
     {
-        String passToHash = password;
+        Account account = Algorithm.<Account>find(accountTable, (e)->e.email.equals(email));
         String generatedPassword = null;
 
-        try {
+        try
+        {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(passToHash.getBytes());
+            md.update(password.getBytes());
 
             byte[] bytes = md.digest();
 
@@ -61,66 +58,69 @@ public abstract class AccountController implements BasicGetController<Account> {
             generatedPassword = sb.toString();
 
         }
-        catch (NoSuchAlgorithmException e) {
+        catch (NoSuchAlgorithmException e)
+        {
             e.printStackTrace();
         }
 
-        Matcher matcher = REGEX_PATTERN_EMAIL.matcher(email);
-        Matcher matchPass = REGEX_PATTERN_PASSWORD.matcher(password);
-
-        if(matcher.find() && matchPass.find() && password.equals(generatedPassword))
+        if (account != null && account.password.equals(generatedPassword))
         {
-            return new Account(name, email, password, 0);
+            return account;
         }
-
-        else{
+        else
+        {
             return null;
         }
 
     }
 
     @PostMapping ("/register")
-    Account Register
-
+    public Account Register
             (
                     @RequestParam String name,
                     @RequestParam String email,
                     @RequestParam String password
-
             )
 
     {
-        String passwordToHash = password;
-        String generatedPassword = null;
-
-        try {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(passwordToHash.getBytes());
-
-            byte[] bytes = md.digest();
-
-            //convert to hex
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-            generatedPassword = sb.toString();
-        } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        }
-
-        password = generatedPassword;
-
-        if (name != null) {
-            return new Account(name, email, password, 0);
-        }
-        else {
+        if(name.isBlank() || !REGEX_PATTERN_EMAIL.matcher(email).matches() || !REGEX_PATTERN_PASSWORD.matcher(password).matches() || Algorithm.<Account>exist(accountTable, e->e.email.equals(email)))
+        {
             return null;
+        }
+
+        else
+        {
+            String generatedPassword = null;
+
+            try
+            {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes());
+                byte[] bytes = md.digest();
+
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < bytes.length; i++)
+                {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                generatedPassword = sb.toString();
+
+            }
+
+            catch (NoSuchAlgorithmException e)
+            {
+                e.printStackTrace();
+            }
+
+            Account account = new Account(name,email,generatedPassword,0);
+            accountTable.add(account);
+            return account;
         }
     }
 
     @PostMapping ("/{id}/registerStore")
-    Account registerStore(
+    public Store registerStore(
             @PathVariable int id,
             @RequestParam String name,
             @RequestParam String address,
@@ -135,26 +135,25 @@ public abstract class AccountController implements BasicGetController<Account> {
         }
 
         myAcc.store = new Store(name, address, phoneNumber,0);
-        return myAcc;
+        return myAcc.store;
     }
 
     @PostMapping ("/{id}/topUp")
-    boolean topUp
+    public  boolean topUp
             (
                     @PathVariable int id,
                     @RequestParam double balance
-
             )
     {
         Account myAcc = Algorithm.<Account>find(accountTable, e -> e.id == id);
         if (myAcc == null)
         {
-            balance += balance;
-            return true;
+            return false;
         }
         else
         {
-            return false;
+           myAcc.balance += balance;
+            return true;
         }
     }
 }

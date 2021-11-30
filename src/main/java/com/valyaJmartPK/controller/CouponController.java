@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/coupon")
 public class CouponController implements BasicGetController<Coupon> {
 
-    @JsonAutowired(value = Coupon.class, filepath = "D:/Praktikum OOP/jmart/coupon.json")
+    @JsonAutowired(value = Coupon.class, filepath = "D://Praktikum OOP/jmart/coupon.json")
     public static JsonTable<Coupon> couponTable;
 
     public JsonTable<Coupon> getJsonTable(){
