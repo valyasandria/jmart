@@ -3,8 +3,7 @@ package com.valyaJmartPK.controller;
 import com.valyaJmartPK.Algorithm;
 import com.valyaJmartPK.dbjson.JsonTable;
 import com.valyaJmartPK.dbjson.Serializable;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -12,15 +11,21 @@ public  interface BasicGetController<T extends Serializable> {
 
     JsonTable<T> getJsonTable();
 
-    @GetMapping("/{id}")
-    public default T getById(@PathVariable int id){
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public default T getById(@PathVariable int id)
+    {
         return Algorithm.<T>find(getJsonTable(), (e) -> e.id == id);
     }
 
-    @GetMapping("/page")
-    public default List<T> getPage(int page, int pageSize)
+    @RequestMapping(value="/page", method = RequestMethod.GET)
+    public default List<T> getPage
+            (
+                    @RequestParam(defaultValue="0") int page,
+                    @RequestParam(defaultValue="5") int pageSize
+            )
     {
-        return Algorithm.<T>paginate(getJsonTable(), page, pageSize, e -> true);
+        final JsonTable<T> table = getJsonTable();
+        return Algorithm.<T>paginate(table, page, pageSize, o -> true);
     }
 
 }

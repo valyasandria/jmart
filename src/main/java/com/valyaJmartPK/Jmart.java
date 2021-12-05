@@ -177,20 +177,25 @@ class Jmart
      long finish = System.currentTimeMillis();
      long timeElapsed = finish - start;
 
-     if (payment.history.equals(Invoice.Status.WAITING_CONFIRMATION) && timeElapsed > WAITING_CONF_LIMIT_MS){
+     if (payment.history.equals(Invoice.Status.WAITING_CONFIRMATION) && timeElapsed > WAITING_CONF_LIMIT_MS)
+     {
          payment.history.add(new Payment.Record(Invoice.Status.FAILED, "FAILED"));
      }
-     else if(payment.history.equals(Invoice.Status.ON_PROGRESS) && timeElapsed > ON_PROGRESS_LIMIT_MS){
+     else if(payment.history.equals(Invoice.Status.ON_PROGRESS) && timeElapsed > ON_PROGRESS_LIMIT_MS)
+     {
          payment.history.add(new Payment.Record(Invoice.Status.FAILED, "FAILED"));
      }
-     else if(payment.history.equals(Invoice.Status.ON_DELIVERY) && timeElapsed > ON_DELIVERY_LIMIT_MS){
+     else if(payment.history.equals(Invoice.Status.ON_DELIVERY) && timeElapsed > ON_DELIVERY_LIMIT_MS)
+     {
          payment.history.add(new Payment.Record(Invoice.Status.ON_DELIVERY, "ON_DELIVERY"));
          return true;
      }
-     else if(payment.history.equals(Invoice.Status.FINISHED) && timeElapsed > DELIVERED_LIMIT_MS){
+     else if(payment.history.equals(Invoice.Status.FINISHED) && timeElapsed > DELIVERED_LIMIT_MS)
+     {
          payment.history.add(new Payment.Record(Invoice.Status.FINISHED, "DELIVERED"));
          return true;
      }
+
      return false;
  }
 }

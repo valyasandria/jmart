@@ -5,6 +5,7 @@ import com.valyaJmartPK.dbjson.JsonAutowired;
 import com.valyaJmartPK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -26,22 +27,32 @@ public class ProductController implements BasicGetController<Product> {
              @RequestParam int pageSize
             )
     {
-        return Algorithm.<Product>paginate(getJsonTable(), page, pageSize, (e) -> e.id == Product.accountId);
+        return Algorithm.<Product>paginate(getJsonTable(), page, pageSize, pred -> pred.accountId == id);
     }
 
     @PostMapping  ("/create")
     Product create
-            (int accountId, String name, int weight, boolean conditionUsed, double price,double discount,ProductCategory category, byte shipmentPlans)
+            (@RequestParam int accountId,
+             @RequestParam String name,
+             @RequestParam int weight,
+             @RequestParam boolean conditionUsed,
+             @RequestParam double price,
+             @RequestParam double discount,
+             @RequestParam ProductCategory category,
+             @RequestParam byte shipmentPlans
+            )
     {
-        Product myAcc = Algorithm.<Product>find(productTable, (e) -> e.accountId == accountId);
-        //if (myAcc != null && myAcc.store != null )
-        //{
-        //    return new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
-        //}
-        //else
-        //{
+        for (Product data : productTable)
+        {
+            if (data.accountId == accountId)
+            {
+                Product product = new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
+                productTable.add(product);
+                return product;
+            }
+        }
+
         return null;
-        //}
     }
     @GetMapping ("/getProductFiltered")
     List<Product> getProductFiltered
@@ -56,6 +67,16 @@ public class ProductController implements BasicGetController<Product> {
             )
 
     {
-        return Algorithm.<Product>collect(productTable, prod -> prod.category == category);
+        List<Product> temporaryProduct= new ArrayList<Product>();
+        for (Product temporary : productTable)
+        {
+            if (temporary.accountId == accountId)
+                if (temporary.name.contains(search))
+                    if (minPrice <= temporary.price)
+                        if (maxPrice >= temporary.price)
+                            if (temporary.category == category)
+                                temporaryProduct.add(temporary);
+        }
+        return temporaryProduct;
     }
 }

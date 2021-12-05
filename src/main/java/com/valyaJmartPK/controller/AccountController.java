@@ -7,8 +7,6 @@ import com.valyaJmartPK.dbjson.JsonAutowired;
 import com.valyaJmartPK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
 @RestController
@@ -23,6 +21,7 @@ public class AccountController implements BasicGetController<Account> {
     @JsonAutowired(value = Account.class, filepath = "D://Praktikum OOP/jmart/account.json")
     public static JsonTable<Account> accountTable;
 
+    @Override
     public JsonTable<Account> getJsonTable(){
         return accountTable;
     }
@@ -32,50 +31,21 @@ public class AccountController implements BasicGetController<Account> {
         return "account page";
     }
 
-    @PostMapping("/login")
-    public Account login
+    @RequestMapping(value = "/login", method = RequestMethod.POST)
+    Account login
             (
                     @RequestParam String email,
                     @RequestParam String password
             )
     {
-        Account account = Algorithm.<Account>find(accountTable, (e)->e.email.equals(email));
-        String generatedPassword = null;
 
-        try
-        {
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-
-            byte[] bytes = md.digest();
-
-            //convert to hex
-            StringBuilder sb = new StringBuilder();
-            for (int i = 0; i < bytes.length; i++) {
-                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-            }
-
-            generatedPassword = sb.toString();
-
-        }
-        catch (NoSuchAlgorithmException e)
-        {
-            e.printStackTrace();
-        }
-
-        if (account != null && account.password.equals(generatedPassword))
-        {
-            return account;
-        }
-        else
-        {
-            return null;
-        }
+        Account account = Algorithm.<Account>find(accountTable, obj -> obj.email.equals(email));
+        return account != null && account.password.equals(password) ? account : null;
 
     }
 
-    @PostMapping ("/register")
-    public Account Register
+    @RequestMapping  (value = "/register", method = RequestMethod.POST)
+    Account Register
             (
                     @RequestParam String name,
                     @RequestParam String email,
@@ -87,72 +57,46 @@ public class AccountController implements BasicGetController<Account> {
         {
             return null;
         }
-
-        else
-        {
-            String generatedPassword = null;
-
-            try
-            {
-                MessageDigest md = MessageDigest.getInstance("MD5");
-                md.update(password.getBytes());
-                byte[] bytes = md.digest();
-
-                StringBuilder sb = new StringBuilder();
-                for (int i = 0; i < bytes.length; i++)
-                {
-                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
-                }
-
-                generatedPassword = sb.toString();
-
-            }
-
-            catch (NoSuchAlgorithmException e)
-            {
-                e.printStackTrace();
-            }
-
-            Account account = new Account(name,email,generatedPassword,0);
+            Account account = new Account(name, email, password,0);
             accountTable.add(account);
             return account;
-        }
     }
 
-    @PostMapping ("/{id}/registerStore")
-    public Store registerStore(
-            @PathVariable int id,
-            @RequestParam String name,
-            @RequestParam String address,
-            @RequestParam String phoneNumber
-    )
+    @RequestMapping(value = "/{id}/registerStore", method = RequestMethod.POST)
+     Store registerStore
+            (
+                @PathVariable int id,
+                @RequestParam String name,
+                @RequestParam String address,
+                @RequestParam String phoneNumber
+            )
 
     {
-        Account myAcc = Algorithm.<Account>find(accountTable, e -> e.id == id);
-        if (myAcc == null || myAcc.store != null)
+        Account account = Algorithm.<Account>find(accountTable, e -> e.id == id);
+        if (account == null || account.store != null)
         {
             return null;
         }
 
-        myAcc.store = new Store(name, address, phoneNumber,0);
-        return myAcc.store;
+        account.store = new Store(name, address, phoneNumber);
+        return account.store;
     }
 
-    @PostMapping ("/{id}/topUp")
-    public  boolean topUp
+    @RequestMapping(value = "/{id}/topUp", method = RequestMethod.POST)
+    boolean topUp
             (
                     @PathVariable int id,
                     @RequestParam double balance
             )
     {
-        Account myAcc = Algorithm.<Account>find(accountTable, e -> e.id == id);
-        if (myAcc == null)
+        Account account = Algorithm.<Account>find(accountTable, e -> e.id == id);
+        if (account == null)
         {
             return false;
         }
         else
         {
-           myAcc.balance += balance;
+            account.balance += balance;
             return true;
         }
     }
