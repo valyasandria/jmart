@@ -6,6 +6,12 @@ import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 
+/**
+ * represents algorithm to be used in the signing or verification process
+ *
+ * @author Ramadhan Kalih Sewu
+ * @version 1.1
+ */
 public class Algorithm {
 
     private Algorithm(){

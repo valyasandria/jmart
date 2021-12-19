@@ -1,20 +1,19 @@
 package com.valyaJmartPK;
 
-
 import java.util.ArrayList;
 import java.util.Date;
 
 /**
- * Write a description of class Payment here.
+ * Calculate the total of product price to be paid and show payment status & date
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public class Payment extends Invoice
 {
-    public static Shipment shipment;
-    public static int productCount;
-    public static ArrayList<Record> history = new ArrayList<Record>();
+    public int productCount;
+    public Shipment shipment;
+    public ArrayList<Record> history = new ArrayList<Record>();
     
     public Payment(int buyerId, int productId, int productCount, Shipment shipment)
     {
@@ -23,8 +22,9 @@ public class Payment extends Invoice
         this.shipment = shipment;
     }
 
-
-    public double getTotalPay(Product product) {
+    //calculate total price after discount according products quantity and shipment cost
+    public double getTotalPay(Product product)
+    {
         return (product.price-((product.discount/100)*product.price)*productCount) + shipment.cost;
     }
 

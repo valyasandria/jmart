@@ -7,6 +7,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * Basic get controller (id and page)
+ * @author Valya Sandria Akiela
+ * @param <T>
+ */
 public  interface BasicGetController<T extends Serializable> {
 
     JsonTable<T> getJsonTable();

@@ -1,10 +1,10 @@
 package com.valyaJmartPK;
 
 /**
- * class Treasury
+ * Class Treasury for application cost
  *
- *
- *
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public class Treasury
 {

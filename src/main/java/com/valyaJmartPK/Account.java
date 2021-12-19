@@ -5,10 +5,10 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Write a description of class Account here.
+ * Create account and validate their email & password
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Valya Sandria Akiela
+ * @version 1.1
  */
 public class Account extends Serializable
 {
@@ -31,6 +31,7 @@ public class Account extends Serializable
 
     }
 
+    //validate email and password
     public boolean validate(String email, String password)
     {
         //validasi email

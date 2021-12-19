@@ -9,6 +9,11 @@ import com.valyaJmartPK.dbjson.JsonAutowired;
 import com.valyaJmartPK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
+/**
+ * Coupon controller to reduce price
+ * @author Valya Sandria Akiela
+ */
+
 @RestController
 @RequestMapping("/coupon")
 public class CouponController implements BasicGetController<Coupon> {
@@ -52,7 +57,8 @@ public class CouponController implements BasicGetController<Coupon> {
 
     @GetMapping("{id}/canAvailable")
     public List<Coupon> getAvailable
-            (@RequestParam(defaultValue = "1") int page,
+            (@PathVariable int id,
+             @RequestParam(defaultValue = "1") int page,
              @RequestParam(defaultValue = "2") int pageSize
             )
     {

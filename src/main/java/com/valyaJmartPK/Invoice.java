@@ -1,12 +1,13 @@
 package com.valyaJmartPK;
-import com.valyaJmartPK.dbjson.Serializable;
 
+import com.valyaJmartPK.dbjson.Serializable;
 import java.util.Date;
+
 /**
- * Write a description of class Invoice here.
+ * Show invoice from buyer transaction
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public abstract class Invoice extends Serializable
 {
@@ -21,13 +22,13 @@ public abstract class Invoice extends Serializable
      {
          this.buyerId = buyerId;
          this.productId = productId;
-
      }
 
     public double getTotalPay(Product product) {
-        return 0;
+        return product.price;
     }
 
+    //
     public static enum Status
      {
          WAITING_CONFIRMATION,
@@ -39,6 +40,7 @@ public abstract class Invoice extends Serializable
          FAILED;
      }
 
+     //products rating from buyer
      public static enum Rating
      {
          NONE,
@@ -46,5 +48,4 @@ public abstract class Invoice extends Serializable
          NEUTRAL,
          GOOD;
      }
-
 }

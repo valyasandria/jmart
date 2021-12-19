@@ -3,11 +3,12 @@ import com.valyaJmartPK.dbjson.Serializable;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
 /**
- * Write a description of class Complaint here.
+ * Class Complaint to represents complaint products from buyer
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public class Complaint extends Serializable
 {

@@ -8,7 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Product controller to create new product
+ * @author Valya Sandria Akiela
+ *
+ */
 @RestController
 @RequestMapping("/product")
 public class ProductController implements BasicGetController<Product> {
@@ -30,8 +34,9 @@ public class ProductController implements BasicGetController<Product> {
         return Algorithm.<Product>paginate(getJsonTable(), page, pageSize, pred -> pred.accountId == id);
     }
 
+    //add new product to the store
     @PostMapping  ("/create")
-    Product create
+    Product createProduct
             (@RequestParam int accountId,
              @RequestParam String name,
              @RequestParam int weight,
@@ -42,18 +47,18 @@ public class ProductController implements BasicGetController<Product> {
              @RequestParam byte shipmentPlans
             )
     {
-        for (Product data : productTable)
+        for(Product temp : productTable)
         {
-            if (data.accountId == accountId)
+            if(temp.accountId == accountId)
             {
-                Product product = new Product(accountId, name, weight, conditionUsed, price, discount, category, shipmentPlans);
+                Product product = new Product(accountId, name, weight,conditionUsed, price, discount, category, shipmentPlans);
                 productTable.add(product);
-                return product;
+                return  product;
             }
         }
-
         return null;
     }
+
     @GetMapping ("/getProductFiltered")
     List<Product> getProductFiltered
             (

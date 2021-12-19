@@ -1,5 +1,11 @@
 package com.valyaJmartPK;
 
+/**
+ * used to top up the balance from mobile phone
+ *
+ * @author Valya Sandria Akiela
+ * @version 1.0
+ */
 public class PhoneTopUp extends Invoice
 {
     public String phoneNumber;
@@ -12,7 +18,8 @@ public class PhoneTopUp extends Invoice
     }
 
     @Override
-    public double getTotalPay(Product product) {
+    public double getTotalPay(Product product)
+    {
         return super.getTotalPay(product);
     }
 }

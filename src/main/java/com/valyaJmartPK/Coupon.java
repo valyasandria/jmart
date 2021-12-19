@@ -4,11 +4,12 @@ package com.valyaJmartPK;
 import com.valyaJmartPK.dbjson.Serializable;
 
 /**
- * Class Coupon
+ * Provides coupon to reduce product price
  *
- * Valya Sandria Akiela
- * @
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
+
 public class Coupon extends Serializable
 {
      public final String name;
@@ -28,6 +29,7 @@ public class Coupon extends Serializable
          this.used = false;
      }
 
+     //use discount or rebate
     public double apply(double price, double discount)
     {
         used = true;

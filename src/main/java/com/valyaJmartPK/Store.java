@@ -3,20 +3,21 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Write a description of class Store here.
+ * Register new store
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public class Store
 {
-    public String REGEX_PHONE = "^(/d{9,12})$";
-    public String REGEX_NAME = "^(?=^[A-Z])(?![A-Z a-z]{20,})((?=[A-Z a-z]{4,}).)((?!\\s{2}).)*$";
-    public String address;
-    public double balance;
+    public static String REGEX_PHONE = "^(/d{9,12})$";
+    public static String REGEX_NAME = "^(?=^[A-Z])(?![A-Z a-z]{20,})((?=[A-Z a-z]{4,}).)((?!\\s{2}).)*$";
+
     public String name;
+    public String address;
     public String phoneNumber;
-    
+
+    //store detail
     public Store(String name, String address, String phoneNumber)
     {
         this.name = name;

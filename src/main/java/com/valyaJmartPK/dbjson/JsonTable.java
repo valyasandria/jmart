@@ -11,7 +11,7 @@ import com.google.gson.stream.JsonReader;
  * List with functionality to be written as / loaded from a JSON Array
  * @author Netlab Team
  * @version 0.1
- * @param <T> Type of component elements (may translated as JSON Object)
+ * @param <T> Type of component elements (may translate as JSON Object)
  */
 public class JsonTable<T> extends Vector<T>
 {

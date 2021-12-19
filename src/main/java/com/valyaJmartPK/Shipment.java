@@ -1,12 +1,14 @@
 package com.valyaJmartPK;
+
 import java.util.Calendar;
 import java.util.Date;
 import java.text.SimpleDateFormat;
+
 /**
- * Write a description of class Shipment here.
+ * Create shipment detail and determine arrival date according to the shipping service used
  *
- * @author (your name)
- * @version (a version number or a date)
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public class Shipment
 {
@@ -22,6 +24,7 @@ public class Shipment
    public byte plan;
    public String receipt;
 
+   //shipment detail
     public Shipment(String address, int cost, byte plan, String receipt)
     {
         this.address = address;
@@ -30,6 +33,7 @@ public class Shipment
         this.receipt = receipt;
     }
 
+    //determine estimated arrival
     public String getEstimatedArrival(Date reference)
     {
         Calendar cal = Calendar.getInstance();

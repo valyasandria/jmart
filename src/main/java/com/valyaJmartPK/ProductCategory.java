@@ -1,10 +1,10 @@
 package com.valyaJmartPK;
 
 /**
- * Enumeration class ProductCategory 
+ * Specify the category of products being sold
  *
- *
- *
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public enum ProductCategory
 {

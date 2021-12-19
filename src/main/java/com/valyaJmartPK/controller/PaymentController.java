@@ -5,7 +5,10 @@ import com.valyaJmartPK.dbjson.JsonAutowired;
 import com.valyaJmartPK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
-
+/**
+ * Payment controller to create, submit, cancel, or accept payment
+ * @author Valya Sandria Akiela
+ */
 @RestController
 @RequestMapping("/payment")
 public class PaymentController implements BasicGetController<Payment>{
@@ -30,6 +33,7 @@ public class PaymentController implements BasicGetController<Payment>{
         return paymentTable;
     }
 
+    //timekeeper to pay product
     protected static boolean timekeeper(Payment payment)
     {
         Payment.Record record = payment.history.get(payment.history.size()-1);
@@ -67,6 +71,7 @@ public class PaymentController implements BasicGetController<Payment>{
         }
     }
 
+    //make new payment
     @PostMapping("/create")
     Payment create
             (@RequestParam int buyerId,
@@ -76,24 +81,24 @@ public class PaymentController implements BasicGetController<Payment>{
              @RequestParam byte shipmentPlan
             )
     {
-        Account acc = Algorithm.<Account>find(AccountController.accountTable, e->e.id == buyerId);
-        Product prod = Algorithm.<Product>find(ProductController.productTable, e->e.id == productId);
+        Account acc = Algorithm.<Account>find(AccountController.accountTable, e -> e.id == buyerId);
+        Product prod = Algorithm.<Product>find(ProductController.productTable, e -> e.id == productId);
 
         if(acc != null && prod != null)
         {
-            Payment payment = new Payment(buyerId, productId, productCount, new Shipment(shipmentAddress,0,shipmentPlan, null));
-            double total = payment.getTotalPay(prod);
+            Payment payment = new Payment(buyerId, productId, productCount, new Shipment(shipmentAddress,9000, shipmentPlan, " "));
 
-            if(acc.balance >= total){
-                acc.balance -= total;
+            if(acc.balance >= payment.getTotalPay(prod))
+            {
+                acc.balance = acc.balance - payment.getTotalPay(prod);
                 Payment.Record record = new Payment.Record(Invoice.Status.WAITING_CONFIRMATION, "WAITING CONFIRMATION");
                 payment.history.add(record);
                 paymentTable.add(payment);
                 poolThread.add(payment);
                 return payment;
-
             }
-            else {
+            else
+            {
                 return null;
             }
         }
@@ -106,8 +111,8 @@ public class PaymentController implements BasicGetController<Payment>{
     @PostMapping("/{id}/accept")
     boolean accept(@PathVariable int id)
     {
-        Payment payment = Algorithm.<Payment>find(getJsonTable(), e->e.id == id);
-        if(payment!=null && payment.history.get(payment.history.size()-1).status.equals(Invoice.Status.WAITING_CONFIRMATION))
+        Payment payment = Algorithm.<Payment>find(getJsonTable(), e -> e.id == id);
+        if(payment != null && payment.history.get(payment.history.size()-1).status.equals(Invoice.Status.WAITING_CONFIRMATION))
         {
             Payment.Record newRecord = new Payment.Record(Invoice.Status.ON_PROGRESS,"ON PROGRESS");
             payment.history.add(newRecord);

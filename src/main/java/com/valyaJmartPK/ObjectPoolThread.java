@@ -1,12 +1,18 @@
 package com.valyaJmartPK;
 
-import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.Vector;
 import java.util.function.Function;
 
+/**
+ * Create ObjectPoolThread
+ *
+ * @author Valya Sandria Akiela
+ * @version 1.0
+ */
 public class ObjectPoolThread<T> extends Thread{
-    private boolean exitSignal;
-    private Vector<T> objectPool;
+    private boolean exitSignal = false;
+    private Vector<T> objectPool = new Vector<>();;
     private Function<T, Boolean> routine;
 
     public ObjectPoolThread (String name, Function<T, Boolean> routine)
@@ -23,6 +29,12 @@ public class ObjectPoolThread<T> extends Thread{
     public synchronized void add(T object)
     {
         objectPool.add(object);
+        this.notify();
+    }
+
+    public int size()
+    {
+        return objectPool.size();
     }
 
     public synchronized void exit()
@@ -30,32 +42,24 @@ public class ObjectPoolThread<T> extends Thread{
        exitSignal = true;
     }
 
+    @Override
     public void run()
     {
-        exitSignal = false;
-        while(objectPool != null)
-        {
-            boolean temp;
-            for (T each : objectPool){
-                if(each == null){
-                    Thread.onSpinWait();
+        try {
+            while (!exitSignal)
+            {
+                synchronized (this)
+                {
+                    while (objectPool.isEmpty())
+                    {
+                        this.wait();
+                    }
                 }
 
-                temp = routine.apply(each);
-
-                if(!temp){
-                    objectPool.add(each);
-                }
-
-                if(exitSignal){
-                    break;
-                }
+                objectPool.removeIf(t -> routine.apply(t));
             }
         }
+        catch (InterruptedException e) {}
     }
 
-    public int size()
-    {
-        return objectPool.size();
-    }
 }

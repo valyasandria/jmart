@@ -1,43 +1,47 @@
 package com.valyaJmartPK;
 
 /**
- * class ProductRating
+ * Represents producs rating
  *
- * Valya Sandria Akiela
- * 2006522650
+ * @author Valya Sandria Akiela
+ * @version 1.0
  */
 public class ProductRating
 {
- private long total;
- private long count;
- 
- public ProductRating()
- {
-     total = 0;
-     count = 0;
- }
- public void insert(int rating)
- {
-     this.total += rating;
-     this.count++;
- }
- public double getAverage()
- {
-     if(count <= 0)
+     private long total;
+     private long count;
+
+     public ProductRating()
      {
-         return 0.0;
+         this.total = 0;
+         this.count = 0;
      }
-     else
+
+     public void insert(int rating)
      {
-        return (double) total/count;
+         total += rating;
+         count++;
      }
- }
- public long getCount()
- {
-     return count;
- }
- public long getTotal()
- {
-     return total;
- }
+
+     public double getAverage()
+     {
+         if(count <= 0)
+         {
+             return 0.0;
+         }
+         else
+         {
+            return (double) total/count;
+         }
+     }
+
+     public long getCount()
+     {
+         return count;
+     }
+     public long getTotal()
+     {
+         return total;
+     }
+
 }

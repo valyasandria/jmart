@@ -7,8 +7,14 @@ import com.valyaJmartPK.dbjson.JsonAutowired;
 import com.valyaJmartPK.dbjson.JsonTable;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
 
+/**
+ * Used to register new account and login
+ * @author Valya Sandria Akiela
+ */
 @RestController
 @RequestMapping("/account")
 public class AccountController implements BasicGetController<Account> {
@@ -31,6 +37,7 @@ public class AccountController implements BasicGetController<Account> {
         return "account page";
     }
 
+    //login account
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     Account login
             (
@@ -39,11 +46,40 @@ public class AccountController implements BasicGetController<Account> {
             )
     {
 
-        Account account = Algorithm.<Account>find(accountTable, obj -> obj.email.equals(email));
-        return account != null && account.password.equals(password) ? account : null;
+        Account account = Algorithm.<Account>find(accountTable, (e)->e.email.equals(email));
 
+        String generatedPassword = null;
+
+        try
+        {
+            MessageDigest md = MessageDigest.getInstance("MD5"); //encryption password
+            md.update(password.getBytes()); //add password bytes to digest
+            byte[] bytes = md.digest(); //get hash's bytes
+
+            //convert to hexadecimal
+            StringBuilder sb = new StringBuilder();
+
+            for (int i = 0; i < bytes.length; i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+            }
+
+            generatedPassword = sb.toString();
+        }
+        catch (NoSuchAlgorithmException e)
+        {
+            e.printStackTrace();
+        }
+        if (account != null && account.password.equals(generatedPassword))
+        {
+            return account;
+        }
+        else
+        {
+            return null;
+        }
     }
 
+    //register new account
     @RequestMapping  (value = "/register", method = RequestMethod.POST)
     Account Register
             (
@@ -57,11 +93,34 @@ public class AccountController implements BasicGetController<Account> {
         {
             return null;
         }
-            Account account = new Account(name, email, password,0);
-            accountTable.add(account);
-            return account;
+        else{
+
+            String generatedPassword = null;
+
+            try
+            {
+                MessageDigest md = MessageDigest.getInstance("MD5");
+                md.update(password.getBytes());
+                byte[] bytes = md.digest();
+                StringBuilder sb = new StringBuilder();
+
+                for (int i = 0; i < bytes.length; i++)
+                {
+                    sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1));
+                }
+
+                generatedPassword = sb.toString();
+            }
+            catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            Account newAccount = new Account(name, email, generatedPassword,0);
+            accountTable.add(newAccount);
+            return newAccount;
+        }
     }
 
+    //register account's store
     @RequestMapping(value = "/{id}/registerStore", method = RequestMethod.POST)
      Store registerStore
             (
@@ -82,6 +141,7 @@ public class AccountController implements BasicGetController<Account> {
         return account.store;
     }
 
+    //top up account's balance
     @RequestMapping(value = "/{id}/topUp", method = RequestMethod.POST)
     boolean topUp
             (
